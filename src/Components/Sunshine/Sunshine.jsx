@@ -5,15 +5,13 @@ import clsx from "clsx";
 const Sunshine = () => {
   const [dataSetName, setDataSetName] = useState("");
   const [dataSet, setDataSet] = useState([]);
-  //   const [dataCitySet, setDataCitySet] = useState(null);
   const [cities, setCities] = useState([]);
   const [city, setCity] = useState("");
-  //   const [dataLabel, setDataLabel] = useState("")
   const [paragraph, setParagraph] = useState("");
 
   useEffect(() => {
     const retrieveData = async () => {
-      const response = await fetch(`http://ap-examen.surge.sh/${dataSetName}`);
+      const response = await fetch(`https://ap-examen.surge.sh/${dataSetName}`);
       const data = await response.json();
       setDataSet(data);
       setCities(data.map((el) => el.stad));
@@ -29,7 +27,6 @@ const Sunshine = () => {
         dataCitySet.temperaturen.reduce((acc, el) => acc + el.temperatuur, 0) /
         dataCitySet.temperaturen.length
       ).toFixed(2);
-      console.log(`In ${city} de gemiddelde temperatuur was ${average}`);
       setParagraph(`In ${city} de gemiddelde temperatuur was ${average}`);
     } else if (dataSetName === "neerslag" && city != "") {
       const dataCitySet = dataSet.find((el) => el.stad == city);
@@ -38,19 +35,13 @@ const Sunshine = () => {
         0
       );
       const average = (total / dataCitySet.gegevens.length).toFixed(2);
-      console.log(
-        `In ${city} the average downpoor was ${average} and in total ${total}`
-      );
       setParagraph(
-        `In ${city} de gemiddelde neerslag ${average}, en ${total} in totaal.`
+        `In ${city} de gemiddelde neerslag was ${average}, en ${total} in totaal.`
       );
     } else if (dataSetName === "zon" && city != "") {
       const dataCitySet = dataSet.find((el) => el.stad == city);
       const total = dataCitySet.stats.reduce((acc, el) => acc + el.zon, 0);
       const average = (total / dataCitySet.stats.length).toFixed(2);
-      console.log(
-        `In ${city} the average hours sunshine was ${average} and in total ${total}`
-      );
       setParagraph(
         `In ${city} het gemiddelde aantal uren zon was ${average}, met ${total.toFixed(
           1
