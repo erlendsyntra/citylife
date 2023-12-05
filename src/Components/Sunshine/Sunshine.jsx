@@ -1,4 +1,3 @@
-// name is not chosen well
 import { useState, useEffect } from "react";
 import "./style.scss";
 import clsx from "clsx";
